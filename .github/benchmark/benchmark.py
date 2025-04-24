@@ -62,8 +62,8 @@ class LitDataBenchmark:
         """Initialize the LitData benchmark with the given configuration."""
         if config.user is None and config.org is None:
             raise ValueError("Either user or org must be provided.")
-        if config.user is not None and config.org is not None:
-            raise ValueError("Only one of user or org must be provided.")
+        # if config.user is not None and config.org is not None:
+            # raise ValueError("Only one of user or org must be provided.")
 
         self.pr = config.pr_number
         self.pr_name = config.pr_name
