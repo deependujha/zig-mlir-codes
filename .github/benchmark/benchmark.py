@@ -8,7 +8,7 @@ from lightning_sdk import Machine, Studio
 
 # Constants
 DEFAULT_TEAMSPACE = "oss-litgp"
-DEFAULT_USER = None
+DEFAULT_USER = "deependu"
 DEFAULT_ORG = "lightning-ai"
 DEFAULT_MACHINE = "A10G"
 
