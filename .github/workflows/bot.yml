@@ -31,9 +31,9 @@ jobs:
           script: |
             const fullComment = context.payload.comment.body;
             const parts = fullComment.trim().split(/\s+/);
-            const args = parts.slice(1).join(' '); // remove "@benchmark" and keep rest
-            core.setOutput("make_args", args);
-            echo "extract: ${{args}}"
+            const makeargs = parts.slice(1).join(' '); // remove "@benchmark" and keep rest
+            core.setOutput("make_args", makeargs);
+            echo "extract: ${{makeargs}}"
 
       - name: Reply to PR comment and save ID
         id: comment
