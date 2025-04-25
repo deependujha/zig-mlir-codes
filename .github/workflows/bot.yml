@@ -76,8 +76,8 @@ jobs:
           echo "command: ${{github.event.comment.body}}"
           echo "make-args: ${{steps.extract.outputs.make_args}}"
           python .github/benchmark/benchmark.py \
-            --pr "${{ steps.comment.outputs.prNumber }}" \
-            --branch "${{ steps.comment.outputs.branch }}" \
+            --pr 565 \
+            --branch "deependujha-patch-1" \
             --make-args "${{ steps.extract.outputs.make_args }}" \
             2> error.txt || true
         env: # the following values are parsed from the repository secrets
