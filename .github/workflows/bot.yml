@@ -41,7 +41,6 @@ jobs:
               pull_number: context.payload.issue.number,
             });
             const branch = pr.data.head.ref;
-            core.setOutput("branch", branch);
 
             // Replace placeholders
             const reply = replyTemplate
@@ -57,13 +56,14 @@ jobs:
 
             core.setOutput("comment_id", response.data.id);
             core.setOutput("prNumber", prNumber);
+            core.setOutput("branch", branch);
             core.setOutput("username", username);
 
       - name: run python
         run: |
           pip install -U lightning-sdk
           echo '"pr number: ${{ steps.comment.outputs.prNumber }}"; "branch: ${{ steps.comment.outputs.branch }}"'
-          python .github/benchmark/benchmark.py --pr 565 --branch "deependujha-patch-1"
+          python .github/benchmark/benchmark.py --pr "${{ steps.comment.outputs.prNumber }}" --branch "${{ steps.comment.outputs.branch }}"
         env: # the following values are parsed from the repository secrets
           LIGHTNING_USER_ID: ${{ secrets.LIGHTNING_USER_ID }}
           LIGHTNING_API_KEY: ${{ secrets.LIGHTNING_API_KEY }}
@@ -80,7 +80,7 @@ jobs:
             const reply = fs.readFileSync(path, 'utf8');
 
             const comment_id = Number(process.env.COMMENT_ID);
-            const updated_body = `Hi @${process.env.USERNAME}!\n\n- Benchmarking output:\n\n${reply}\n\n\ncc: @deependujha`;
+            const updated_body = `Hi @${process.env.USERNAME}!\n\n- Benchmarking output:\n\n${reply}\n\n\ncc: @tchaton @deependujha @bhimrazy`;
 
             await github.rest.issues.updateComment({
               owner: context.repo.owner,
