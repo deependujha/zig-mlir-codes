@@ -33,6 +33,7 @@ jobs:
             const parts = fullComment.trim().split(/\s+/);
             const args = parts.slice(1).join(' '); // remove "@benchmark" and keep rest
             core.setOutput("make_args", args);
+            echo "extract: ${{args}}"
 
       - name: Reply to PR comment and save ID
         id: comment
