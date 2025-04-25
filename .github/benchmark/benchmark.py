@@ -54,7 +54,7 @@ def parse_args() -> BenchmarkArgs:
         org=args.org,
         teamspace=args.teamspace,
         machine=machine_map[args.machine],
-        make_args=args.make_args
+        make_args=args.make_args,
     )
 
 
@@ -142,9 +142,9 @@ def main():
     """Main function to run the benchmark."""
     config = parse_args()
     print(f"Running LitData benchmark for PR #{config}")
-    raise ValueError("break the wall down. Jericho!")
     benchmark = LitDataBenchmark(config)
     benchmark.run()
+    benchmark.studio.stop()
     print(f"✅ Benchmark completed for PR #{config.pr_number}")
 
 
