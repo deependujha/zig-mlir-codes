@@ -74,6 +74,7 @@ class LitDataBenchmark:
         self.user = config.user
         self.org = config.org
         self.machine = config.machine
+        self.make_args = config.make_args
         self.studio: Optional[Studio] = None
 
     def run(self) -> None:
