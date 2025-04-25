@@ -74,6 +74,7 @@ jobs:
           pip install -U lightning-sdk
           echo '"pr number: ${{ steps.comment.outputs.prNumber }}"; "branch: ${{ steps.comment.outputs.branch }}"'
           echo "command: ${{github.event.comment.body}}"
+          echo "make-args: ${{steps.extract.outputs.make_args}}"
           python .github/benchmark/benchmark.py \
             --pr "${{ steps.comment.outputs.prNumber }}" \
             --branch "${{ steps.comment.outputs.branch }}" \
