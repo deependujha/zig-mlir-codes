@@ -63,7 +63,10 @@ jobs:
         run: |
           pip install -U lightning-sdk
           echo '"pr number: ${{ steps.comment.outputs.prNumber }}"; "branch: ${{ steps.comment.outputs.branch }}"'
-          python .github/benchmark/benchmark.py --pr "${{ steps.comment.outputs.prNumber }}" --branch "${{ steps.comment.outputs.branch }}"
+          python .github/benchmark/benchmark.py \
+            --pr "${{ steps.comment.outputs.prNumber }}" \
+            --branch "${{ steps.comment.outputs.branch }}" \
+            2> error.txt || true
         env: # the following values are parsed from the repository secrets
           LIGHTNING_USER_ID: ${{ secrets.LIGHTNING_USER_ID }}
           LIGHTNING_API_KEY: ${{ secrets.LIGHTNING_API_KEY }}
@@ -76,11 +79,17 @@ jobs:
         with:
           script: |
             const fs = require('fs');
-            const path = 'result.md';
-            const reply = fs.readFileSync(path, 'utf8');
-
             const comment_id = Number(process.env.COMMENT_ID);
-            const updated_body = `Hi @${process.env.USERNAME}!\n\n- Benchmarking output:\n\n${reply}\n\n\ncc: @tchaton @deependujha @bhimrazy`;
+
+            let reply = '';
+            if (fs.existsSync('error.txt') && fs.readFileSync('error.txt', 'utf8').trim().length > 0) {
+              const err = fs.readFileSync('error.txt', 'utf8');
+              reply = `❌ **Benchmark failed**\n\n\`\`\`\n${err}\n\`\`\``;
+            } else {
+              reply = fs.existsSync('result.md') ? fs.readFileSync('result.md', 'utf8') : '❌ Benchmark completed, but can't find `result.md` file. Something went wrong.';
+            }
+
+            const updated_body = `Hi @${process.env.USERNAME}!\n\n${reply}\n\ncc:  @deependujha`;
 
             await github.rest.issues.updateComment({
               owner: context.repo.owner,
