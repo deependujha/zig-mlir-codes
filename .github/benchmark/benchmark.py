@@ -139,7 +139,7 @@ def main():
     """Main function to run the benchmark."""
     config = parse_args()
     print(f"Running LitData benchmark for PR #{config}")
-    return
+    raise ValueError("lund lele")
     benchmark = LitDataBenchmark(config)
     benchmark.run()
     print(f"✅ Benchmark completed for PR #{config.pr_number}")
