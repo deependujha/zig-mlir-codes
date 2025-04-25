@@ -86,8 +86,11 @@ jobs:
               const err = fs.readFileSync('error.txt', 'utf8');
               reply = `❌ **Benchmark failed**\n\n\`\`\`\n${err}\n\`\`\``;
             } else {
-              reply = fs.existsSync('result.md') ? fs.readFileSync('result.md', 'utf8') : '❌ Benchmark completed, but can't find `result.md` file. Something went wrong.';
+              reply = fs.existsSync('result.md')
+                ? fs.readFileSync('result.md', 'utf8')
+                : '❌ Benchmark completed, but can\'t find `result.md` file. Something went wrong.';
             }
+
 
             const updated_body = `Hi @${process.env.USERNAME}!\n\n${reply}\n\ncc:  @deependujha`;
 
