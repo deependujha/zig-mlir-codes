@@ -96,6 +96,10 @@ class LitDataBenchmark:
             org=self.org,
         )
         self.studio.start(self.machine)
+        output, output_code = self.studio.run_with_exit_code("rm -rf lit*(N)")
+        if output_code != 0:
+            raise RuntimeError(f"Command failed:\n{final_command}\nExit code {output_code}:\n{output}")
+
 
     def setup_litdata_pr(self) -> None:
         """Set up the LitData PR in the studio."""
@@ -103,7 +107,6 @@ class LitDataBenchmark:
 
         # don't use `gh` cli, as it requires to login
         commands = [
-            "rm -rf lit*(N)",
             "git clone https://github.com/Lightning-AI/litData.git",
             "cd litData",
             f"git fetch origin pull/{self.pr}/head:{self.pr_name}",
