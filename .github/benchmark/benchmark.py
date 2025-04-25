@@ -121,7 +121,7 @@ class LitDataBenchmark:
         commands = [
             "git clone https://github.com/bhimrazy/litdata-benchmark.git",
             "cd litdata-benchmark",
-            "make benchmark",
+            f"make benchmark {self.make_args}",
         ]
         final_command = " && ".join(commands)
         print(f"Running command: {final_command}")
